@@ -1,0 +1,35 @@
+stages:
+- build
+- deploy
+- verify
+
+cache:
+  paths:
+  - node_modules/
+
+build:
+  stage: build
+  tags:
+    - demo
+  script:
+    - npm install
+
+deploy:
+  stage: deploy
+  tags:
+    - demo
+  script:
+#    - ps aux | grep -m 1 "demo/app.js"  | grep -v grep | awk '{print $2}' | xargs sudo kill -9
+#    - /usr/bin/nohup /usr/bin/node  /tmp/demo/app.js &
+#    - sleep 2 && echo "app deployed"
+    - cd /tmp/demo/
+    - git pull
+    - npm install    
+    - sudo systemctl restart node_demo
+    
+verify:
+  stage: verify
+  tags:
+    - demo
+  script:
+    - /usr/bin/curl -s localhost:8001
