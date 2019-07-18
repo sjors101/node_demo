@@ -1,0 +1,11 @@
+[Unit]
+Description=Startup for nodejs demo service
+
+[Service]
+WorkingDirectory=/tmp/demo/
+Environment=NODE_ENV=development
+ExecStart=/usr/bin/node app.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
